@@ -17,6 +17,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
@@ -49,6 +50,9 @@ public class AppController implements Initializable {
 
 	@FXML
 	TextField typeField;
+
+	@FXML
+	Label fileStatus;
 
 	@FXML
 	public void openFile(ActionEvent event) {
@@ -105,6 +109,8 @@ public class AppController implements Initializable {
 		nameField.setText(item.getValue().getName());
 		pathField.setText(item.getValue().getPath());
 		typeField.setText(item.getValue().getType());
+
+		fileStatus.setText(item.getValue().getFile().getAbsolutePath());
 	}
 
 }

@@ -25,139 +25,171 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.jhdf.fx.menu.AppController">
-         <center>
-            <SplitPane dividerPositions="0.5" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" BorderPane.alignment="CENTER">
-               <items>
-                  <TreeView fx:id="tree" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" showRoot="false" />
-            <VBox prefHeight="200.0" prefWidth="100.0">
-               <children>
-                  <GridPane>
-                    <columnConstraints>
-                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                    </columnConstraints>
-                    <rowConstraints>
-                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                    </rowConstraints>
-                     <children>
-                        <Label text="Name">
-                           <opaqueInsets>
-                              <Insets />
-                           </opaqueInsets>
-                        </Label>
-                        <Label text="Path" GridPane.rowIndex="1" />
-                        <Label text="Type" GridPane.rowIndex="2" />
-                        <TextField fx:id="nameField" editable="false" focusTraversable="false" text="None" GridPane.columnIndex="1" />
-                        <TextField fx:id="pathField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <TextField fx:id="typeField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                     </children>
-                     <opaqueInsets>
-                        <Insets />
-                     </opaqueInsets>
-                  </GridPane>
-                        <TableView fx:id="attributeTable" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
-                          <columns>
-                            <TableColumn fx:id="attributeName" maxWidth="1.7976931348623157E308" minWidth="58.0" prefWidth="200.0" text="Name" />
-                            <TableColumn fx:id="attributeValue" maxWidth="1.7976931348623157E308" minWidth="0.0" prefWidth="200.0" sortable="false" text="Value" />
-                          </columns>
-                        </TableView>
-               </children>
-            </VBox>
-               </items>
-            </SplitPane>
-         </center>
-         <top>
-            <VBox BorderPane.alignment="CENTER">
-               <children>
-                <MenuBar>
-                  <menus>
-                    <Menu mnemonicParsing="false" text="File">
-                      <items>
-                        <MenuItem mnemonicParsing="false" text="New" />
-                        <MenuItem mnemonicParsing="false" onAction="#openFile" text="Open…" />
-                        <Menu fx:id="openRecent" mnemonicParsing="false" text="Open Recent" />
-                        <SeparatorMenuItem mnemonicParsing="false" />
-                        <MenuItem mnemonicParsing="false" text="Close" />
-                        <MenuItem mnemonicParsing="false" text="Save" />
-                        <MenuItem mnemonicParsing="false" text="Save As…" />
-                        <MenuItem mnemonicParsing="false" text="Revert" />
-                        <SeparatorMenuItem mnemonicParsing="false" />
-                        <MenuItem mnemonicParsing="false" text="Preferences…" />
-                        <SeparatorMenuItem mnemonicParsing="false" />
-                        <MenuItem mnemonicParsing="false" text="Quit" />
-                      </items>
-                    </Menu>
-                    <Menu mnemonicParsing="false" text="Edit">
-                      <items>
-                        <MenuItem mnemonicParsing="false" text="Undo" />
-                        <MenuItem mnemonicParsing="false" text="Redo" />
-                        <SeparatorMenuItem mnemonicParsing="false" />
-                        <MenuItem mnemonicParsing="false" text="Cut" />
-                        <MenuItem mnemonicParsing="false" text="Copy" />
-                        <MenuItem mnemonicParsing="false" text="Paste" />
-                        <MenuItem mnemonicParsing="false" text="Delete" />
-                        <SeparatorMenuItem mnemonicParsing="false" />
-                        <MenuItem mnemonicParsing="false" text="Select All" />
-                        <MenuItem mnemonicParsing="false" text="Unselect All" />
-                      </items>
-                    </Menu>
-                    <Menu mnemonicParsing="false" text="Help">
-                      <items>
-                        <MenuItem mnemonicParsing="false" text="About MyHelloApp" />
-                      </items>
-                    </Menu>
-                  </menus>
-                </MenuBar>
-                  <ToolBar prefHeight="40.0" prefWidth="200.0">
-                    <items>
-                      <Button mnemonicParsing="false" onAction="#openFile" text="Open">
-                           <cursor>
-                              <Cursor fx:constant="DEFAULT" />
-                           </cursor>
-                           <graphic>
-                              <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@icons/folder.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                           <tooltip>
-                              <Tooltip text="Open a HDF5 file" />
-                           </tooltip>
-                        </Button>
-                        <Button mnemonicParsing="false" text="Button" />
-                        <Button layoutX="67.0" layoutY="11.0" mnemonicParsing="false" text="Button" />
-                    </items>
-                  </ToolBar>
-               </children>
-            </VBox>
-         </top>
-   <bottom>
-      <HBox prefHeight="26.0" prefWidth="800.0" BorderPane.alignment="CENTER">
-         <children>
-            <VBox>
-               <children>
-                  <Label text="Status Left">
-                     <VBox.margin>
-                        <Insets left="5.0" top="5.0" />
-                     </VBox.margin>
-                  </Label>
-               </children>
-            </VBox>
-            <Pane maxHeight="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
-            <VBox layoutX="210.0" layoutY="10.0">
-               <children>
-                  <Label text="Status Right">
-                     <VBox.margin>
-                        <Insets right="5.0" top="5.0" />
-                     </VBox.margin>
-                  </Label>
-               </children>
-            </VBox>
-         </children>
-      </HBox>
-   </bottom>
-      </BorderPane>
+<BorderPane prefHeight="700.0" prefWidth="1000.0"
+	xmlns="http://javafx.com/javafx/10.0.1"
+	xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="io.jhdf.fx.menu.AppController">
+	<center>
+		<SplitPane dividerPositions="0.4"
+			maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+			BorderPane.alignment="CENTER">
+			<items>
+				<TreeView fx:id="tree" maxHeight="1.7976931348623157E308"
+					maxWidth="1.7976931348623157E308" showRoot="false" />
+				<VBox maxHeight="1.7976931348623157E308"
+					maxWidth="1.7976931348623157E308">
+					<children>
+						<GridPane minHeight="-Infinity">
+							<columnConstraints>
+								<ColumnConstraints hgrow="SOMETIMES"
+									maxWidth="45.0" minWidth="45.0" prefWidth="45.0" />
+								<ColumnConstraints hgrow="SOMETIMES"
+									maxWidth="1.7976931348623157E308" minWidth="0.0"
+									prefWidth="462.0" />
+							</columnConstraints>
+							<rowConstraints>
+								<RowConstraints minHeight="10.0"
+									prefHeight="30.0" vgrow="SOMETIMES" />
+								<RowConstraints minHeight="10.0"
+									prefHeight="30.0" vgrow="SOMETIMES" />
+								<RowConstraints minHeight="10.0"
+									prefHeight="30.0" vgrow="SOMETIMES" />
+							</rowConstraints>
+							<children>
+								<Label text="Name">
+									<opaqueInsets>
+										<Insets />
+									</opaqueInsets>
+								</Label>
+								<Label text="Path" GridPane.rowIndex="1" />
+								<Label text="Type" GridPane.rowIndex="2" />
+								<TextField fx:id="nameField" editable="false"
+									focusTraversable="false" GridPane.columnIndex="1" />
+								<TextField fx:id="pathField" GridPane.columnIndex="1"
+									GridPane.rowIndex="1" />
+								<TextField fx:id="typeField" GridPane.columnIndex="1"
+									GridPane.rowIndex="2" />
+							</children>
+							<opaqueInsets>
+								<Insets />
+							</opaqueInsets>
+							<padding>
+								<Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+							</padding>
+						</GridPane>
+						<TableView fx:id="attributeTable"
+							maxHeight="1.7976931348623157E308"
+							maxWidth="1.7976931348623157E308">
+							<columns>
+								<TableColumn fx:id="attributeName"
+									maxWidth="1.7976931348623157E308" minWidth="58.0"
+									prefWidth="200.0" text="Name" />
+								<TableColumn fx:id="attributeValue"
+									maxWidth="1.7976931348623157E308" minWidth="0.0"
+									prefWidth="200.0" sortable="false" text="Value" />
+							</columns>
+						</TableView>
+					</children>
+				</VBox>
+			</items>
+		</SplitPane>
+	</center>
+	<top>
+		<VBox BorderPane.alignment="CENTER">
+			<children>
+				<MenuBar>
+					<menus>
+						<Menu mnemonicParsing="false" text="File">
+							<items>
+								<MenuItem mnemonicParsing="false" text="New" />
+								<MenuItem mnemonicParsing="false" onAction="#openFile"
+									text="Open…" />
+								<Menu fx:id="openRecent" mnemonicParsing="false"
+									text="Open Recent" />
+								<SeparatorMenuItem mnemonicParsing="false" />
+								<MenuItem mnemonicParsing="false" text="Close" />
+								<MenuItem mnemonicParsing="false" text="Save" />
+								<MenuItem mnemonicParsing="false" text="Save As…" />
+								<MenuItem mnemonicParsing="false" text="Revert" />
+								<SeparatorMenuItem mnemonicParsing="false" />
+								<MenuItem mnemonicParsing="false" text="Preferences…" />
+								<SeparatorMenuItem mnemonicParsing="false" />
+								<MenuItem mnemonicParsing="false" text="Quit" />
+							</items>
+						</Menu>
+						<Menu mnemonicParsing="false" text="Edit">
+							<items>
+								<MenuItem mnemonicParsing="false" text="Undo" />
+								<MenuItem mnemonicParsing="false" text="Redo" />
+								<SeparatorMenuItem mnemonicParsing="false" />
+								<MenuItem mnemonicParsing="false" text="Cut" />
+								<MenuItem mnemonicParsing="false" text="Copy" />
+								<MenuItem mnemonicParsing="false" text="Paste" />
+								<MenuItem mnemonicParsing="false" text="Delete" />
+								<SeparatorMenuItem mnemonicParsing="false" />
+								<MenuItem mnemonicParsing="false" text="Select All" />
+								<MenuItem mnemonicParsing="false" text="Unselect All" />
+							</items>
+						</Menu>
+						<Menu mnemonicParsing="false" text="Help">
+							<items>
+								<MenuItem mnemonicParsing="false"
+									text="About MyHelloApp" />
+							</items>
+						</Menu>
+					</menus>
+				</MenuBar>
+				<ToolBar prefHeight="40.0" prefWidth="200.0">
+					<items>
+						<Button mnemonicParsing="false" onAction="#openFile"
+							text="Open">
+							<cursor>
+								<Cursor fx:constant="DEFAULT" />
+							</cursor>
+							<graphic>
+								<ImageView fitHeight="20.0" fitWidth="20.0"
+									pickOnBounds="true" preserveRatio="true">
+									<image>
+										<Image url="@icons/folder.png" />
+									</image>
+								</ImageView>
+							</graphic>
+							<tooltip>
+								<Tooltip text="Open a HDF5 file" />
+							</tooltip>
+						</Button>
+						<Button mnemonicParsing="false" text="Button" />
+						<Button layoutX="67.0" layoutY="11.0"
+							mnemonicParsing="false" text="Button" />
+					</items>
+				</ToolBar>
+			</children>
+		</VBox>
+	</top>
+	<bottom>
+		<HBox prefHeight="26.0" prefWidth="800.0"
+			BorderPane.alignment="CENTER">
+			<children>
+				<VBox>
+					<children>
+						<Label fx:id="fileStatus">
+							<VBox.margin>
+								<Insets left="5.0" top="5.0" />
+							</VBox.margin>
+						</Label>
+					</children>
+				</VBox>
+				<Pane maxHeight="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
+				<VBox layoutX="210.0" layoutY="10.0">
+					<children>
+						<Label text="Status Right">
+							<VBox.margin>
+								<Insets right="5.0" top="5.0" />
+							</VBox.margin>
+						</Label>
+					</children>
+				</VBox>
+			</children>
+		</HBox>
+	</bottom>
+</BorderPane>
