@@ -2,8 +2,11 @@ package io.jhdf.fx.menu;
 
 import java.io.File;
 import java.net.URL;
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
 import io.jhdf.HdfFile;
 import io.jhdf.Node;
@@ -111,6 +114,27 @@ public class AppController implements Initializable {
 		typeField.setText(item.getValue().getType());
 
 		fileStatus.setText(item.getValue().getFile().getAbsolutePath());
+	}
+
+	@FXML
+	public void openAboutDialog() {
+		System.err.println("Implement about dialog");
+	}
+
+	@FXML
+	public void closeAll() {
+		tree.getRoot().getChildren().setAll(Collections.emptyList());
+	}
+
+	@FXML
+	public void close() {
+		ObservableList<TreeItem<Node>> selectedItems = tree.selectionModelProperty().getValue().getSelectedItems();
+		ObservableList<TreeItem<Node>> allOpenFiles = tree.getRoot().getChildren();
+
+		List<TreeItem<Node>> toBeClosed = selectedItems.stream().filter(allOpenFiles::contains)
+				.collect(Collectors.toList());
+
+		tree.getRoot().getChildren().removeAll(toBeClosed);
 	}
 
 }

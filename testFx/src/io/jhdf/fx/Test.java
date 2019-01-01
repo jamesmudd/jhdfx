@@ -13,7 +13,7 @@ public class Test extends Application {
 
 	@Override
 	public void start(Stage primaryStage) throws IOException {
-		primaryStage.setTitle("jHDfx");
+		primaryStage.setTitle("jHDFx");
 		primaryStage.getIcons().setAll(new Image(getClass().getResourceAsStream("icons/hdf5.png")));
 		Pane pane = FXMLLoader.load(getClass().getResource("test.fxml"));
 		Scene scene = new Scene(pane);
