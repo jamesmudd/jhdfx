@@ -99,6 +99,7 @@ public class AppController implements Initializable {
 			TreeItem<Node> fileRoot = new io.jhdf.fx.tree.HdfTreeItem(hdfFile);
 			tree.getRoot().getChildren().add(fileRoot);
 		} catch (Exception e) {
+			e.printStackTrace();
 			Alert alert = new Alert(AlertType.ERROR, "Failed to open file: " + file.getAbsolutePath());
 			alert.showAndWait();
 		}
