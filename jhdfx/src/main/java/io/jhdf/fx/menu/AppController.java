@@ -9,8 +9,9 @@ import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
 import io.jhdf.HdfFile;
-import io.jhdf.Node;
+import io.jhdf.api.Node;
 import io.jhdf.fx.TextFieldTreeCellImpl;
+import io.jhdf.fx.tree.HdfTreeItem;
 import io.jhdf.object.message.AttributeMessage;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -96,7 +97,7 @@ public class AppController implements Initializable {
 	private void openFile(File file) {
 		try {
 			HdfFile hdfFile = new HdfFile(file);
-			TreeItem<Node> fileRoot = new io.jhdf.fx.tree.HdfTreeItem(hdfFile);
+			TreeItem<Node> fileRoot = new HdfTreeItem(hdfFile);
 			tree.getRoot().getChildren().add(fileRoot);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -112,7 +113,7 @@ public class AppController implements Initializable {
 
 		nameField.setText(item.getValue().getName());
 		pathField.setText(item.getValue().getPath());
-		typeField.setText(item.getValue().getType());
+		typeField.setText(item.getValue().getType().toString());
 
 		fileStatus.setText(item.getValue().getFile().getAbsolutePath());
 	}

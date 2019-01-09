@@ -2,7 +2,8 @@ package io.jhdf.fx.tree;
 
 import java.util.Collection;
 
-import io.jhdf.Node;
+import io.jhdf.api.Group;
+import io.jhdf.api.Node;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TreeItem;
@@ -53,8 +54,8 @@ public class HdfTreeItem extends TreeItem<Node> {
 
 	private ObservableList<TreeItem<Node>> buildChildren(HdfTreeItem item) {
 		Node f = item.getValue();
-		if (f != null && f.isGroup()) {
-			Collection<Node> files = f.getChildren().values();
+		if (f instanceof Group) {
+			Collection<Node> files = ((Group) f).getChildren().values();
 			if (files != null) {
 				ObservableList<TreeItem<Node>> children = FXCollections.observableArrayList();
 

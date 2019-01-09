@@ -1,9 +1,9 @@
 package io.jhdf.fx;
 
-import io.jhdf.Dataset;
-import io.jhdf.Group;
 import io.jhdf.HdfFile;
-import io.jhdf.Node;
+import io.jhdf.api.Dataset;
+import io.jhdf.api.Group;
+import io.jhdf.api.Node;
 import javafx.scene.control.TreeCell;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
