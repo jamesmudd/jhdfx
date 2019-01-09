@@ -92,8 +92,10 @@ task runApp(type: JavaExec) {
                '--add-modules', 'javafx.controls,javafx.fxml']
 }
 
-task createJar(type: Copy) {
+task createPackage(type: Zip) {
     dependsOn 'jar'
-    into "$buildDir/libs"
     from configurations.runtime
+	from "$buildDir/libs"
+	from 'jhdfx.sh'
+	into 'jhdfx'
 }
