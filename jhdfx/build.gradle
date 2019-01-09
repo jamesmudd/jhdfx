@@ -42,36 +42,23 @@ dependencies {
     // This dependency is used internally, and not exposed to consumers on their own compile classpath.
     // implementation 'com.google.guava:guava:23.0'
     
-    compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.25'
-    compile group: 'ch.qos.logback', name:'logback-classic', version: '1.2.3'
-    compile group: 'ch.qos.logback', name:'logback-core', version: '1.2.3'
+    compile group: 'org.slf4j', name: 'slf4j-api', version: '1.8.0-beta2' // Need 1.8 for modules
+    runtime group: 'org.slf4j', name: 'slf4j-simple', version: '1.8.0-beta2'
     
+    // jHDF lib
 	compile group: 'io.jhdf', name:'jhdf',version: '0.1.3'
-
-    // Use JUnit test framework
-    testImplementation 'junit:junit:4.12'
-    
+  
    	// Java FX dependices using custom Ivy URL repo
-	compile "org.openjfx:javafx-base:${javafxVersion}:${osName}"
-	compile "org.openjfx:javafx-controls:${javafxVersion}:${osName}"
-	compile "org.openjfx:javafx-fxml:${javafxVersion}:${osName}"
-	compile "org.openjfx:javafx-graphics:${javafxVersion}:${osName}"
+	compile group: 'org.openjfx', name: 'javafx-base', version: "${javafxVersion}", classifier: "${osName}"
+	compile group: 'org.openjfx', name: 'javafx-controls', version: "${javafxVersion}", classifier: "${osName}"
+	compile group: 'org.openjfx', name: 'javafx-fxml', version: "${javafxVersion}", classifier: "${osName}"
+	compile group: 'org.openjfx', name: 'javafx-graphics', version: "${javafxVersion}", classifier: "${osName}"
 }
 
 // In this section you declare where to find the dependencies of your project
 repositories {
-    // Use jcenter for resolving your dependencies.
-    // You can declare any Maven/Ivy/file repository here.
     jcenter()
-    
-    // This is a fake ivy repo to allow resolution of platform specific openjfx jars
-    // https://stackoverflow.com/questions/23023069/gradle-download-and-unzip-file-from-url/34327202#34327202
-    ivy {
-        url "https://repo.jfrog.org/artifactory/libs-release-bintray/"
-        patternLayout {
-            artifact '[organisation]/[module]/[revision]-[platform].jar'
-        }
-    }
+
 }
 
 jar {
