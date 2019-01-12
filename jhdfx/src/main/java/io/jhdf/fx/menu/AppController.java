@@ -59,6 +59,9 @@ public class AppController implements Initializable {
 	Label fileStatus;
 
 	@FXML
+	TextField idField;
+
+	@FXML
 	public void openFile(ActionEvent event) {
 		System.out.println("Open File");
 
@@ -114,6 +117,7 @@ public class AppController implements Initializable {
 		nameField.setText(item.getValue().getName());
 		pathField.setText(item.getValue().getPath());
 		typeField.setText(item.getValue().getType().toString());
+		idField.setText(Long.toString(item.getValue().getAddress()));
 
 		fileStatus.setText(item.getValue().getFile().getAbsolutePath());
 	}
@@ -137,6 +141,11 @@ public class AppController implements Initializable {
 				.collect(Collectors.toList());
 
 		tree.getRoot().getChildren().removeAll(toBeClosed);
+	}
+
+	@FXML
+	public void quit() {
+		System.exit(0);
 	}
 
 }
