@@ -46,7 +46,7 @@ dependencies {
     runtime group: 'org.slf4j', name: 'slf4j-simple', version: '1.8.0-beta2'
     
     // jHDF lib
-	compile group: 'io.jhdf', name:'jhdf',version: '0.1.+'
+	compile group: 'io.jhdf', name:'jhdf',version: '0.2.+'
   
    	// Java FX dependices using custom Ivy URL repo
 	compile group: 'org.openjfx', name: 'javafx-base', version: "${javafxVersion}", classifier: "${osName}"
