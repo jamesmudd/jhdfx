@@ -13,7 +13,7 @@ plugins {
 
 // Varibles
 group = 'io.jhdf'
-version = '0.0.1'
+version = '0.1.0'
 sourceCompatibility = 1.11
 targetCompatibility = 1.11
 
@@ -32,7 +32,7 @@ switch (OperatingSystem.current()) {
 }
 
 ext {
-	javafxVersion = '11.0.1'
+	javafxVersion = '11.0.2'
 }
 
 dependencies {
@@ -48,7 +48,7 @@ dependencies {
     // jHDF lib
 	compile group: 'io.jhdf', name:'jhdf',version: '0.2.+'
   
-   	// Java FX dependices using custom Ivy URL repo
+   	// Java FX dependices
 	compile group: 'org.openjfx', name: 'javafx-base', version: "${javafxVersion}", classifier: "${osName}"
 	compile group: 'org.openjfx', name: 'javafx-controls', version: "${javafxVersion}", classifier: "${osName}"
 	compile group: 'org.openjfx', name: 'javafx-fxml', version: "${javafxVersion}", classifier: "${osName}"
