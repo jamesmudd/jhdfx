@@ -2,6 +2,7 @@ package io.jhdf.fx.menu;
 
 import java.io.File;
 import java.net.URL;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -30,6 +31,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
 
 public class AppController implements Initializable {
 
@@ -63,10 +65,14 @@ public class AppController implements Initializable {
 
 	@FXML
 	public void openFile(ActionEvent event) {
-		System.out.println("Open File");
-
 		FileChooser fc = new FileChooser();
 		fc.setTitle("Open HDF5 file");
+		ExtensionFilter hdf5Filter = new ExtensionFilter("HDF5 files (.h5, .hdf5, .he5)",
+				Arrays.asList("*.h5", "*.hdf5", "*.he5"));
+		ExtensionFilter nexusFilter = new ExtensionFilter("NeXus files (.nxs)", Arrays.asList("*.nxs"));
+		ExtensionFilter allFilter = new ExtensionFilter("All files", Arrays.asList("*"));
+		fc.getExtensionFilters().addAll(hdf5Filter, nexusFilter, allFilter);
+		fc.setSelectedExtensionFilter(hdf5Filter);
 		File openedFile = fc.showOpenDialog(tree.getScene().getWindow());
 
 		if (openedFile != null) {
