@@ -12,6 +12,8 @@ import java.util.stream.Collectors;
 import io.jhdf.HdfFile;
 import io.jhdf.api.Node;
 import io.jhdf.fx.TextFieldTreeCellImpl;
+import io.jhdf.fx.persistance.RecentFiles;
+import io.jhdf.fx.persistance.UserPersistance;
 import io.jhdf.fx.tree.HdfTreeItem;
 import io.jhdf.object.message.AttributeMessage;
 import javafx.beans.property.SimpleStringProperty;
@@ -63,27 +65,30 @@ public class AppController implements Initializable {
 	@FXML
 	TextField idField;
 
+	private File lastOpenLocation;
+
 	@FXML
 	public void openFile(ActionEvent event) {
-		FileChooser fc = new FileChooser();
-		fc.setTitle("Open HDF5 file");
+		FileChooser fileChooser = new FileChooser();
+		fileChooser.setTitle("Open HDF5 file");
 		ExtensionFilter hdf5Filter = new ExtensionFilter("HDF5 files (.h5, .hdf5, .he5)",
 				Arrays.asList("*.h5", "*.hdf5", "*.he5"));
 		ExtensionFilter nexusFilter = new ExtensionFilter("NeXus files (.nxs)", Arrays.asList("*.nxs"));
 		ExtensionFilter allFilter = new ExtensionFilter("All files", Arrays.asList("*"));
-		fc.getExtensionFilters().addAll(hdf5Filter, nexusFilter, allFilter);
-		fc.setSelectedExtensionFilter(hdf5Filter);
-		File openedFile = fc.showOpenDialog(tree.getScene().getWindow());
+		fileChooser.getExtensionFilters().addAll(hdf5Filter, nexusFilter, allFilter);
+		fileChooser.setSelectedExtensionFilter(hdf5Filter);
+		fileChooser.setInitialDirectory(lastOpenLocation);
+		File openedFile = fileChooser.showOpenDialog(tree.getScene().getWindow());
 
 		if (openedFile != null) {
 			openFile(openedFile);
+			lastOpenLocation = openedFile.getParentFile();
 		}
-
 	}
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		populateOpenRecent();
+		populateOpenRecent(UserPersistance.getRecentFiles());
 
 		tree.setRoot(new TreeItem<>());
 		tree.setCellFactory(param -> new TextFieldTreeCellImpl());
@@ -94,12 +99,21 @@ public class AppController implements Initializable {
 		attributeValue.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getValue().toString()));
 	}
 
-	private void populateOpenRecent() {
+	private void populateOpenRecent(RecentFiles recentFiles) {
 		ObservableList<MenuItem> recents = FXCollections.observableArrayList();
-		recents.add(new MenuItem("Hello"));
-		recents.add(new MenuItem("Hello2"));
-		recents.add(new MenuItem("Hello3"));
 
+		if (recentFiles.isEmpty()) {
+			MenuItem item = new MenuItem("None");
+			item.setDisable(true);
+			recents.add(item);
+
+		} else {
+			for (String string : recentFiles) {
+				MenuItem item = new MenuItem(string);
+				item.setOnAction(e -> openFile(new File(string)));
+				recents.add(item);
+			}
+		}
 		openRecent.getItems().setAll(recents);
 	}
 
@@ -108,6 +122,8 @@ public class AppController implements Initializable {
 			HdfFile hdfFile = new HdfFile(file);
 			TreeItem<Node> fileRoot = new HdfTreeItem(hdfFile);
 			tree.getRoot().getChildren().add(fileRoot);
+			RecentFiles recentFiles = UserPersistance.persistFileOpen(file);
+			refreshRecents(recentFiles);
 		} catch (Exception e) {
 			e.printStackTrace();
 			Alert alert = new Alert(AlertType.ERROR, "Failed to open file: " + file.getAbsolutePath());
@@ -115,17 +131,29 @@ public class AppController implements Initializable {
 		}
 	}
 
+	private void refreshRecents(RecentFiles recentFiles) {
+		populateOpenRecent(recentFiles);
+	}
+
 	private void updateAttributes(TreeItem<Node> item) {
-		ObservableList<Map.Entry<String, AttributeMessage>> items = FXCollections
-				.observableArrayList(item.getValue().getAttributes().entrySet());
-		attributeTable.setItems(items);
-
-		nameField.setText(item.getValue().getName());
-		pathField.setText(item.getValue().getPath());
-		typeField.setText(item.getValue().getType().toString());
-		idField.setText(Long.toString(item.getValue().getAddress()));
-
-		fileStatus.setText(item.getValue().getFile().getAbsolutePath());
+		if (item != null) {
+			ObservableList<Map.Entry<String, AttributeMessage>> items = FXCollections
+					.observableArrayList(item.getValue().getAttributes().entrySet());
+			attributeTable.setItems(items);
+			nameField.setText(item.getValue().getName());
+			pathField.setText(item.getValue().getPath());
+			typeField.setText(item.getValue().getType().toString());
+			idField.setText(Long.toString(item.getValue().getAddress()));
+			fileStatus.setText(item.getValue().getFile().getAbsolutePath());
+		} else {
+			ObservableList<Map.Entry<String, AttributeMessage>> items = FXCollections.observableArrayList();
+			attributeTable.setItems(items);
+			nameField.setText("");
+			pathField.setText("");
+			typeField.setText("");
+			idField.setText("");
+			fileStatus.setText("");
+		}
 	}
 
 	@FXML
