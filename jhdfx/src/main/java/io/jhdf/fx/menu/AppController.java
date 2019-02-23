@@ -1,6 +1,7 @@
 package io.jhdf.fx.menu;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.Collections;
@@ -10,7 +11,9 @@ import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
 import io.jhdf.HdfFile;
+import io.jhdf.api.Dataset;
 import io.jhdf.api.Node;
+import io.jhdf.fx.DatasetDialogController;
 import io.jhdf.fx.TextFieldTreeCellImpl;
 import io.jhdf.fx.persistance.RecentFiles;
 import io.jhdf.fx.persistance.UserPersistance;
@@ -20,8 +23,11 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
@@ -32,8 +38,11 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
+import javafx.stage.Stage;
 
 public class AppController implements Initializable {
 
@@ -94,6 +103,33 @@ public class AppController implements Initializable {
 		tree.setCellFactory(param -> new TextFieldTreeCellImpl());
 		tree.getSelectionModel().selectedItemProperty()
 				.addListener((observable, oldValue, newValue) -> updateAttributes(newValue));
+		tree.setOnMouseClicked(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent mouseEvent) {
+				// Double click tree item
+				if (mouseEvent.getClickCount() == 2) {
+					TreeItem<Node> item = tree.getSelectionModel().getSelectedItem();
+					Node node = item.getValue();
+					if (node instanceof Dataset) {
+						Dataset dataset = (Dataset) node;
+						FXMLLoader loader = new FXMLLoader(getClass().getResource("../datasetDialog.fxml"));
+						try {
+							Pane pane = loader.load();
+							Scene scene = new Scene(pane);
+							Stage stage = new Stage();
+							stage.setScene(scene);
+							stage.setTitle("jHDFx - " + dataset.getPath());
+							stage.show();
+							DatasetDialogController controller = loader.getController();
+							controller.setDataset(dataset);
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+				}
+			}
+		});
 
 		attributeName.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getKey()));
 		attributeValue.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getValue().toString()));
