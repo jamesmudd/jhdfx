@@ -10,7 +10,10 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
+import org.apache.commons.lang3.ArrayUtils;
+
 import io.jhdf.HdfFile;
+import io.jhdf.api.Attribute;
 import io.jhdf.api.Dataset;
 import io.jhdf.api.Node;
 import io.jhdf.fx.DatasetDialogController;
@@ -18,7 +21,6 @@ import io.jhdf.fx.TextFieldTreeCellImpl;
 import io.jhdf.fx.persistance.RecentFiles;
 import io.jhdf.fx.persistance.UserPersistance;
 import io.jhdf.fx.tree.HdfTreeItem;
-import io.jhdf.object.message.AttributeMessage;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -53,11 +55,11 @@ public class AppController implements Initializable {
 	Menu openRecent;
 
 	@FXML
-	TableView<Map.Entry<String, AttributeMessage>> attributeTable;
+	TableView<Map.Entry<String, Attribute>> attributeTable;
 	@FXML
-	TableColumn<Map.Entry<String, AttributeMessage>, String> attributeName;
+	TableColumn<Map.Entry<String, Attribute>, String> attributeName;
 	@FXML
-	TableColumn<Map.Entry<String, AttributeMessage>, String> attributeValue;
+	TableColumn<Map.Entry<String, Attribute>, String> attributeValue;
 
 	@FXML
 	TextField nameField;
@@ -132,7 +134,8 @@ public class AppController implements Initializable {
 		});
 
 		attributeName.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getKey()));
-		attributeValue.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getValue().toString()));
+		attributeValue.setCellValueFactory(
+				param -> new SimpleStringProperty(ArrayUtils.toString(param.getValue().getValue().getData())));
 	}
 
 	private void populateOpenRecent(RecentFiles recentFiles) {
@@ -173,7 +176,7 @@ public class AppController implements Initializable {
 
 	private void updateAttributes(TreeItem<Node> item) {
 		if (item != null) {
-			ObservableList<Map.Entry<String, AttributeMessage>> items = FXCollections
+			ObservableList<Map.Entry<String, Attribute>> items = FXCollections
 					.observableArrayList(item.getValue().getAttributes().entrySet());
 			attributeTable.setItems(items);
 			nameField.setText(item.getValue().getName());
@@ -182,7 +185,7 @@ public class AppController implements Initializable {
 			idField.setText(Long.toString(item.getValue().getAddress()));
 			fileStatus.setText(item.getValue().getFile().getAbsolutePath());
 		} else {
-			ObservableList<Map.Entry<String, AttributeMessage>> items = FXCollections.observableArrayList();
+			ObservableList<Map.Entry<String, Attribute>> items = FXCollections.observableArrayList();
 			attributeTable.setItems(items);
 			nameField.setText("");
 			pathField.setText("");
