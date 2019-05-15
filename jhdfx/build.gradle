@@ -24,10 +24,10 @@ switch (OperatingSystem.current()) {
         project.ext.osName = "linux";
         break ;
     case OperatingSystem.MAC_OS:
-        project.ext.osName = "macos";
+        project.ext.osName = "mac";
         break ;
     case OperatingSystem.WINDOWS:
-        project.ext.osName = "windows";
+        project.ext.osName = "win";
         break ;
 }
 
