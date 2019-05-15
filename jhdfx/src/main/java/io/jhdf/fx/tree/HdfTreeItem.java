@@ -46,7 +46,13 @@ public class HdfTreeItem extends TreeItem<Node> {
 		if (isFirstTimeLeaf) {
 			isFirstTimeLeaf = false;
 			Node f = getValue();
-			isLeaf = !f.isGroup();
+			if(f.isGroup()) {
+				Group g = (Group) f;
+				isLeaf = g.getChildren().size() == 0;
+			} else {
+				// Not a group so must be a leaf
+				isLeaf = true;
+			}
 		}
 
 		return isLeaf;
