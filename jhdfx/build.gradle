@@ -74,7 +74,7 @@ application {
 task runApp(type: JavaExec) {
     main = 'io.jhdf.fx.Test'
     classpath sourceSets.main.runtimeClasspath
-    jvmArgs = ['--module-path', configurations.runtime.asPath,
+    jvmArgs = ['--module-path', classpath.asPath,
                '--add-modules', 'javafx.controls,javafx.fxml']
 }
 
