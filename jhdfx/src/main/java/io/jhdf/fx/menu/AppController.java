@@ -84,8 +84,8 @@ public class AppController implements Initializable {
 		fileChooser.setTitle("Open HDF5 file");
 		ExtensionFilter hdf5Filter = new ExtensionFilter("HDF5 files (.h5, .hdf5, .he5)",
 				Arrays.asList("*.h5", "*.hdf5", "*.he5"));
-		ExtensionFilter nexusFilter = new ExtensionFilter("NeXus files (.nxs)", Arrays.asList("*.nxs"));
-		ExtensionFilter allFilter = new ExtensionFilter("All files", Arrays.asList("*"));
+		ExtensionFilter nexusFilter = new ExtensionFilter("NeXus files (.nxs)", Collections.singletonList("*.nxs"));
+		ExtensionFilter allFilter = new ExtensionFilter("All files", Collections.singletonList("*"));
 		fileChooser.getExtensionFilters().addAll(hdf5Filter, nexusFilter, allFilter);
 		fileChooser.setSelectedExtensionFilter(hdf5Filter);
 		fileChooser.setInitialDirectory(lastOpenLocation);
@@ -105,7 +105,7 @@ public class AppController implements Initializable {
 		tree.setCellFactory(param -> new TextFieldTreeCellImpl());
 		tree.getSelectionModel().selectedItemProperty()
 				.addListener((observable, oldValue, newValue) -> updateAttributes(newValue));
-		tree.setOnMouseClicked(new EventHandler<MouseEvent>() {
+		tree.setOnMouseClicked(new EventHandler<>() {
 			@Override
 			public void handle(MouseEvent mouseEvent) {
 				// Double click tree item
